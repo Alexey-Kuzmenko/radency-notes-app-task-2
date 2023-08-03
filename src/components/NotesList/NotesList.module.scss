@@ -1,0 +1,10 @@
+.NotesList {
+    display: flex;
+    flex-flow: column nowrap;
+
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    row-gap: 10px;
+}

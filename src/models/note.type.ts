@@ -1,4 +1,3 @@
-
 export type NoteCategories = 'task' | 'randomThought' | 'idea';
 export type NoteStatus = 'active' | 'archived';
 
@@ -8,6 +7,6 @@ export interface Note {
     id: string
     content: string
     status: NoteStatus
-    createdAt: Date
-    dates: Array<string>
+    createdAt: string
+    dates: Array<string> | Array<RegExpMatchArray>
 }

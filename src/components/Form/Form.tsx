@@ -1,16 +1,18 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, FormHelperText } from '@mui/material';
 import styles from './Form.module.scss';
-import cn from 'classnames';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NoteCategories } from '../../models/note.type';
+import { useAppDispatch } from '../../hooks';
+import { addNote } from '../../store/notesSlice';
 
-interface FormValues {
+export interface FormValues {
     name: string
     category: NoteCategories
     content: string
 }
 
 export const Form = () => {
+    const dispatch = useAppDispatch();
 
     const {
         control,
@@ -30,9 +32,7 @@ export const Form = () => {
     });
 
     const onFormSubmitHandler: SubmitHandler<FormValues> = (formData): void => {
-        // ! debug
-        console.log(formData);
-        // dispatch
+        dispatch(addNote(formData));
         reset();
     };
 
@@ -106,7 +106,7 @@ export const Form = () => {
 
                 <div className={styles.Form__controls}>
                     <Button variant="contained" color='success' size='medium' type='submit' disabled={!isValid}>
-                        Add
+                        Create Note
                     </Button>
 
                     <Button variant="contained" color="error" size='medium' onClick={onFormResetHandler}>

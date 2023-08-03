@@ -1,10 +1,11 @@
 @use '../../scss/utilities/placeholders';
+@use '../../scss/utilities/variables' as vars;
 
 .Form {
     @extend %box-style;
-    -webkit-box-shadow: 0px 8px 25px -4px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 8px 25px -4px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 8px 25px -4px rgba(0, 0, 0, 0.5);
+    box-shadow: vars.$shadow;
+    margin-bottom: 50px;
+
 
     &__innerFlexContainer {
         display: flex;
