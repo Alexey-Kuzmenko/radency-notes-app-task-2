@@ -1,8 +1,10 @@
 .EditPage {
     position: relative;
-    width: 100%;
+
     display: flex;
-    flex-flow: column;
     align-items: center;
+    flex-flow: column;
     justify-content: flex-start;
+
+    width: 100%;
 }

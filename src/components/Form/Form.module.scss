@@ -2,10 +2,10 @@
 @use '../../scss/utilities/variables' as vars;
 
 .Form {
-    @extend %box-style;
-    box-shadow: vars.$shadow;
-    margin-bottom: 50px;
     width: 100%;
+    margin-bottom: 50px;
+
+    box-shadow: vars.$shadow;
 
 
     &__innerFlexContainer {
@@ -24,4 +24,6 @@
     &_hidden {
         display: none;
     }
+
+    @extend %box-style;
 }

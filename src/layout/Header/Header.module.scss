@@ -16,10 +16,13 @@
     }
 
     &__logo {
-        text-transform: uppercase;
-        color: vars.$white;
-        font-weight: 700;
         width: 100px;
+
+        text-transform: uppercase;
+
+        color: vars.$white;
+
+        font-weight: 700;
     }
 
     &__menu {
