@@ -23,7 +23,7 @@ export const NotesList: React.FC<NotesListProps> = ({ notes, label }) => {
 
     const onRemoveClickHandler = (id: string): void => {
         dispatch(removeFromArchiveNote(id));
-    }
+    };
 
     const renderNotes = (): JSX.Element[] => {
         return notes.map((note: Note) => {

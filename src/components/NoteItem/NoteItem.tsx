@@ -4,17 +4,16 @@ import { Note } from '../../models/note.type';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-
-type NoteItem = Omit<Note, 'id'>;
+import { Link } from 'react-router-dom';
 
 interface NoteItemProps {
-    note: NoteItem,
+    note: Note,
     deleteHandler: React.MouseEventHandler
     archiveHandler: React.MouseEventHandler
     removeHandler: React.MouseEventHandler
 }
 
-export const NoteItem: React.FC<NoteItemProps> = ({ note: { name, category, content, dates, createdAt, status }, deleteHandler, archiveHandler, removeHandler }) => {
+export const NoteItem: React.FC<NoteItemProps> = ({ note: { name, category, content, dates, createdAt, status, id }, deleteHandler, archiveHandler, removeHandler }) => {
 
     let noteItemIcon = (
         <TaskAltIcon sx={{ marginLeft: '5px' }} />
@@ -33,7 +32,7 @@ export const NoteItem: React.FC<NoteItemProps> = ({ note: { name, category, cont
     let noteItemControls = (
         <>
             <Button variant='contained' size="small" color='error' onClick={deleteHandler}>Delete</Button>
-            <Button variant='contained' size="small" color='primary' onClick={() => ({})}>Edit</Button>
+            <Button variant='contained' size="small" color='primary'><Link to={`${id}`} relative='path' className={styles.NoteItem__link}>Edit</Link></Button>
             <Button variant='contained' size="small" color='secondary' onClick={archiveHandler}>Archive</Button>
         </>
     );

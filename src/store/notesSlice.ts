@@ -71,12 +71,47 @@ const notesSlice = createSlice({
                 state.archive = state.archive.filter((note) => note.id !== payload);
             }
         },
-        editNote(state, { payload }: PayloadAction<string>) {
-            const note = state.notes.find((note) => note.id === payload);
+        editNote(state, { payload }: PayloadAction<{ formData: FormValues, id: string }>) {
+            const { formData, id } = payload;
+            const note = state.notes.find((note) => note.id === id);
+
+            if (note) {
+                const noteIndex = state.notes.indexOf(note);
+
+                note.name = formData.name;
+                note.category = formData.category;
+                note.content = formData.content;
+                note.dates = findDates(formData.content);
+
+                const notesCopy = [...state.notes];
+                notesCopy[noteIndex] = note;
+                state.notes = notesCopy;
+            }
+        },
+        calcTotals(state) {
+            const allNotes = [...state.notes, ...state.archive];
+
+            const stats = {
+                task: { active: 0, archived: 0 },
+                randomThought: { active: 0, archived: 0 },
+                idea: { active: 0, archived: 0 }
+            };
+
+            allNotes.forEach((note) => {
+                const { category, status } = note;
+
+                if (status === 'archived') {
+                    stats[category].archived++;
+                } else {
+                    stats[category].active++;
+                }
+            });
+
+            state.stats = stats;
         }
     }
 });
 
-export const { addNote, deleteNote, archiveNote, removeFromArchiveNote, editNote } = notesSlice.actions;
+export const { addNote, deleteNote, archiveNote, removeFromArchiveNote, editNote, calcTotals } = notesSlice.actions;
 
 export default notesSlice.reducer;

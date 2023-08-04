@@ -1,4 +1,4 @@
-import { Form, NotesList } from '../../components';
+import { Form, NotesList, Stats } from '../../components';
 import { useAppSelector } from '../../hooks';
 
 // ! testing
@@ -37,8 +37,9 @@ export const Homepage = () => {
     const { notes } = useAppSelector((state) => state.notes);
     return (
         <div>
-            <Form />
+            <Form defaultValues={{ name: '', category: 'task', content: '' }} />
             <NotesList notes={notes} label='Notes' />
+            <Stats />
         </div>
     );
 };

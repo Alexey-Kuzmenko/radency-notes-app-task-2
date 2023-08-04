@@ -8,5 +8,5 @@ export interface Note {
     content: string
     status: NoteStatus
     createdAt: string
-    dates: Array<string> | Array<RegExpMatchArray>
+    dates: Array<string>
 }

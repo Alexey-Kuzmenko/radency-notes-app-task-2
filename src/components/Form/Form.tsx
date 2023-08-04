@@ -3,7 +3,17 @@ import styles from './Form.module.scss';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NoteCategories } from '../../models/note.type';
 import { useAppDispatch } from '../../hooks';
-import { addNote } from '../../store/notesSlice';
+import { addNote, editNote } from '../../store/notesSlice';
+
+interface FormProps {
+    role?: 'create' | 'edit'
+    id?: string
+    defaultValues: {
+        name: string
+        category: NoteCategories
+        content: string
+    }
+}
 
 export interface FormValues {
     name: string
@@ -11,7 +21,7 @@ export interface FormValues {
     content: string
 }
 
-export const Form = () => {
+export const Form: React.FC<FormProps> = ({ role = 'create', defaultValues, id = '' }) => {
     const dispatch = useAppDispatch();
 
     const {
@@ -23,11 +33,7 @@ export const Form = () => {
         handleSubmit,
         reset
     } = useForm<FormValues>({
-        defaultValues: {
-            name: '',
-            category: 'task',
-            content: ''
-        },
+        defaultValues,
         mode: 'onBlur'
     });
 
@@ -36,18 +42,22 @@ export const Form = () => {
         reset();
     };
 
+    const onFromEditSubmitHandler: SubmitHandler<FormValues> = (formData): void => {
+        dispatch(editNote({ formData, id }));
+    };
+
     const onFormResetHandler = (): void => {
         reset();
     };
 
     return (
-        <form className={styles.Form} onSubmit={handleSubmit(onFormSubmitHandler)}>
+        <form className={styles.Form} onSubmit={handleSubmit(role === 'create' ? onFormSubmitHandler : onFromEditSubmitHandler)}>
             <div className={styles.Form__innerFlexContainer}>
 
                 <Controller
                     name='name'
                     control={control}
-                    rules={{ required: { value: true, message: 'This field is required' } }}
+                    rules={{ required: { value: true, message: 'This field is required' }, pattern: { value: /[\S\s]+[\S]+/, message: 'Invalid value' } }}
                     render={({ field }) =>
                         <TextField
                             {...field}
@@ -89,7 +99,7 @@ export const Form = () => {
                 <Controller
                     name='content'
                     control={control}
-                    rules={{ required: { value: true, message: 'This field is required' } }}
+                    rules={{ required: { value: true, message: 'This field is required' }, pattern: { value: /[\S\s]+[\S]+/, message: 'Invalid value' } }}
                     render={({ field }) =>
                         <TextField
                             {...field}
@@ -106,7 +116,7 @@ export const Form = () => {
 
                 <div className={styles.Form__controls}>
                     <Button variant="contained" color='success' size='medium' type='submit' disabled={!isValid}>
-                        Create Note
+                        {role === 'create' ? 'Create Note' : 'Edit note'}
                     </Button>
 
                     <Button variant="contained" color="error" size='medium' onClick={onFormResetHandler}>

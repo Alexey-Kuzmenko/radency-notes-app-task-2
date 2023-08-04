@@ -7,7 +7,7 @@ const Layout = () => {
     return (
         <div className={styles.Layout}>
             <Header />
-            <main style={{ paddingTop: '20vh' }}>
+            <main style={{ paddingTop: '20vh', paddingBottom: '10vh' }}>
                 <Container>
                     <Outlet />
                 </Container>

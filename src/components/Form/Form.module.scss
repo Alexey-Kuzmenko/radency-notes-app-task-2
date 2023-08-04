@@ -5,6 +5,7 @@
     @extend %box-style;
     box-shadow: vars.$shadow;
     margin-bottom: 50px;
+    width: 100%;
 
 
     &__innerFlexContainer {

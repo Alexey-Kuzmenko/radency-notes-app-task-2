@@ -1,7 +1,7 @@
-import { NotesList } from "../../components";
-import { useAppSelector } from "../../hooks";
+import { NotesList } from '../../components';
+import { useAppSelector } from '../../hooks';
 
-export const Archivepage = () => {
+export const ArchivePage = () => {
     const { archive } = useAppSelector((state) => state.notes);
     return (
         <>
