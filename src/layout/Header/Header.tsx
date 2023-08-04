@@ -2,10 +2,24 @@ import Container from '../Container/Container';
 import styles from './Header.module.scss';
 import Links from './link.type';
 import { NavLink } from 'react-router-dom';
+import { MenuToggle } from '../../components';
+import cn from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { closeMenu, toggleMenu } from '../../store/menuSlice';
 
 const links: Links[] = [{ href: 'notes' }, { href: 'notes-archive', label: 'archive' }];
 
 const Header = () => {
+    const menuIsOpen = useAppSelector((state) => state.menu.menuIsOpen);
+    const dispatch = useAppDispatch();
+
+    const onMenuToggleClickHandler = () => {
+        dispatch(toggleMenu());
+    };
+
+    const onMenuLinkClickHandler = () => {
+        dispatch(closeMenu());
+    };
 
     const renderLinks = (): JSX.Element[] => {
         return links.map(({ href, label }: Links, i) => {
@@ -13,6 +27,7 @@ const Header = () => {
                 key={i}
                 to={href}
                 className={styles.Header__menuLink}
+                onClick={onMenuLinkClickHandler}
             >
                 {label ? label : href}
             </NavLink>;
@@ -28,7 +43,12 @@ const Header = () => {
                     <p className={styles.Header__logo}>Note App</p>
 
                     <div className={styles.Header__menu}>
-                        <nav className={styles.Header__menuBody}>
+
+                        <MenuToggle onClickHandler={onMenuToggleClickHandler} />
+
+                        <nav className={cn(styles.Header__menuBody, {
+                            [styles.Header__menuBody_open]: menuIsOpen === true
+                        })}>
                             <div className={styles.Header__menuList}>
                                 {renderLinks()}
                             </div>
