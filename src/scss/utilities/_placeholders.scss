@@ -1,0 +1,13 @@
+@use './variables' as vars;
+
+%box-style {
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 20px 15px;
+
+    text-align: justify;
+
+    border-radius: vars.$border-radius;
+    border: 1px solid vars.$indigo-800;
+    background-color: vars.$white;
+}
